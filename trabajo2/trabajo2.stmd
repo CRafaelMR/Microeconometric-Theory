@@ -1,0 +1,53 @@
+```s/
+clear all
+set more off
+global CARP "E:\documentos que si importan\Microeconometria\trabajo2"
+cd "$CARP"
+foreach ado in psmatch2 coefplot scheme-burd estout{
+    cap which `ado'
+    if _rc!=0 ssc install `ado', all
+}
+*ssc install synth, all replace*
+*cap ado uninstall synth_runner //in-case already installed*
+*net install synth_runner, from(https://raw.github.com/bquistorff/synth_runner/master/) replace*
+sysuse synth_smoking, clear
+tsset state year
+*1a*
+*ocupamos primero el comando Synth promovido por las instrucciones*
+synth cigsale beer(1984(1)1988) lnincome retprice age15to24 cigsale(1988) cigsale(1980) cigsale(1975),trunit(3) trperiod(1989) gen_vars fig
+*luego, ocupamos el equivalente Synth_runner obtenido de github. Sus resultados son equivalentes.*
+synth_runner cigsale beer(1984(1)1988) lnincome retprice age15to24 cigsale(1988) cigsale(1980) cigsale(1975), trunit(3) trperiod(1989) gen_vars
+*1b*
+effect_graphs , trlinediff(-1) effect_gname(cigsale1_effect) tc_gname(cigsale1_tc) tc_options(saving(tc.pdf , asis replace)) effect_options(saving(effect.pdf , asis replace))
+
+
+
+
+
+*2a*
+foreach state of num 1 2 4/39{
+synth cigsale beer(1984(1)1988) lnincome(1972(1)1997) retprice age15to24 cigsale(1988) cigsale(1980) cigsale(1975), trunit(`state') trperiod(1989)
+
+}
+
+
+*2b*
+synth_runner cigsale beer(1984(1)1988) lnincome retprice age15to24 cigsale(1988) cigsale(1980) cigsale(1975),trunit(3) trperiod(1989)
+single_treatment_graphs, trlinediff(-1) raw_gname(cigsale1_raw) effects_gname(cigsale1_effects) effects_ylabels(-30(10)30) effects_ymax(35) effects_ymin(-35)
+
+*3a*
+gen tratados=0
+replace tratados=1 if state==3 & year>=1988
+eststo: reg cigsale tratados i.state i.year
+*3b*
+eststo: reg cigsale tratados i.state i.year, vce(cluster state)
+eststo: reg cigsale tratados i.state i.year
+
+
+```
+#hola mundo
+$$theta $$
+
+![Figure 1: efectos de cigarro\ Note: This is a footnote just below the figure's caption.][my_img]
+
+    [my_img]:https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png {width=100%}

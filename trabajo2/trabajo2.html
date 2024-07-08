@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<style>
+/* CSS for Markstat 2.0 using Pandoc 2.0 */
+body{padding:14px 28px;}
+body, table {font-family: Helvetica, Arial, Sans-serif; font-size: 14px;}
+h1, h2, h3, h4 {font-weight: normal; color: #3366cc}
+h1 {font-size: 200%;}
+h2 {font-size: 150%;}
+h3 {font-size: 120%;}
+h4 {font-size: 100%; font-weight:bold}
+img.center {display:block; margin-left:auto; margin-right:auto}
+.small{font-size:8pt;}
+a {color: black;}
+a:visited {color: #808080;}
+a.plain {text-decoration:none;}
+a.plain:hover {text-decoration:underline;}
+.em {font-weight:bold;}
+pre, code {font-family: "lucida console", monospace;}
+pre.stata {font-size:13px; line-height:13px;}
+pre {padding:8px; border:1px solid #c0c0c0; border-radius:8px; background-color:#fdfdfd;}
+code {color:#3366cc; background-color:#fafafa;}
+pre code { color:black; background-color:white}
+/* Added for Pandoc */
+figure > img, div.figure > img {display:block; margin:auto}
+figcaption, p.caption {text-align:center; font-weight:bold; color:#3366cc;}
+h1.title {text-align:center; margin-bottom:0}
+p.author, h2.author {font-style:italic; text-align:center;margin-top:4px;margin-bottom:0}
+p.date, h3.date {text-align:center;margin-top:4px; margin-bottom:0}
+/* Tables*/
+table { margin:auto; border-collapse:collapse; }
+table caption { margin-bottom:1ex;}
+th, td { padding:4px 6px;}
+thead tr:first-child th {border-top:1px solid black; padding-top:6px}
+thead tr:last-child  th {padding-bottom:6px}
+tbody tr:first-child td {border-top:1px solid black; padding-top:6px}
+tbody tr:last-child  td {padding-bottom:6px;}
+table tbody:last-child tr:last-child td {border-bottom:1px solid black;}
+</style>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>trabajo2</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<pre class='stata'>E:\documentos que si importan\Microeconometria\trabajo2
+
+  2. cap which `ado'
+  3. if _rc!=0 ssc install `ado', all
+  4. }
+checking scheme-burd consistency and verifying not already installed...
+all files already exist and are up to date.
+
+checking synth consistency and verifying not already installed...
+all files already exist and are up to date.
+
+checking synth_runner consistency and verifying not already installed...
+all files already exist and are up to date.
+
+(Tobacco Sales in 39 US States)
+
+       panel variable:  state (strongly balanced)
+        time variable:  year, 1970 to 2000
+                delta:  1 unit
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Synthetic Control Method for Comparative Case Studies
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+First Step: Data Setup
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+control units: for 38 of out 38 units missing obs for predictor lnincome in period 1970 -ignored for averaging
+control units: for 38 of out 38 units missing obs for predictor lnincome in period 1971 -ignored for averaging
+treated unit: for 1 of out 1 units missing obs for predictor lnincome in period 1970 -ignored for averaging
+treated unit: for 1 of out 1 units missing obs for predictor lnincome in period 1971 -ignored for averaging
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Data Setup successful
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+                Treated Unit: California
+               Control Units: Alabama, Arkansas, Colorado, Connecticut, Delaware, Georgia, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky,
+                              Louisiana, Maine, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Mexico, North
+                              Carolina, North Dakota, Ohio, Oklahoma, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas,
+                              Utah, Vermont, Virginia, West Virginia, Wisconsin, Wyoming
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+          Dependent Variable: cigsale
+  MSPE minimized for periods: 1970 1971 1972 1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 1983 1984 1985 1986 1987 1988
+Results obtained for periods: 1970 1971 1972 1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 1983 1984 1985 1986 1987 1988 1989 1990 1991 1992
+                              1993 1994 1995 1996 1997 1998 1999 2000
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+                  Predictors: beer(1984(1)1988) lnincome retprice age15to24 cigsale(1988) cigsale(1980) cigsale(1975)
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Unless period is specified
+predictors are averaged over: 1970 1971 1972 1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 1983 1984 1985 1986 1987 1988
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Second Step: Run Optimization
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Optimization done
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Third Step: Obtain Results
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Loss: Root Mean Squared Prediction Error
+
+─────────────────────
+   RMSPE │  1.943233 
+─────────────────────
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Unit Weights:
+
+───────────────┬────────────
+         Co_No │ Unit_Weight
+───────────────┼────────────
+       Alabama │           0
+      Arkansas │           0
+      Colorado │        .285
+   Connecticut │        .101
+      Delaware │           0
+       Georgia │           0
+         Idaho │           0
+      Illinois │           0
+       Indiana │           0
+          Iowa │           0
+        Kansas │           0
+      Kentucky │           0
+     Louisiana │           0
+         Maine │           0
+     Minnesota │           0
+   Mississippi │           0
+      Missouri │           0
+       Montana │           0
+      Nebraska │           0
+        Nevada │        .245
+ New Hampshire │           0
+    New Mexico │           0
+North Carolina │           0
+  North Dakota │           0
+          Ohio │           0
+      Oklahoma │           0
+  Pennsylvania │           0
+  Rhode Island │           0
+South Carolina │           0
+  South Dakota │           0
+     Tennessee │           0
+         Texas │           0
+          Utah │        .369
+       Vermont │           0
+      Virginia │           0
+ West Virginia │           0
+     Wisconsin │           0
+       Wyoming │           0
+───────────────┴────────────
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Predictor Balance:
+
+──────────────────────────────────────────────────────
+                               │   Treated  Synthetic 
+───────────────────────────────+──────────────────────
+             beer(1984(1)1988) │     24.28   23.22596 
+                      lnincome │  10.03176   9.867266 
+                      retprice │  66.63684   65.40743 
+                     age15to24 │  .1786624   .1825559 
+                 cigsale(1988) │      90.1    92.6063 
+                 cigsale(1980) │     120.2   120.3907 
+                 cigsale(1975) │     127.1   126.7094 
+──────────────────────────────────────────────────────
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Estimating the treatment effects
+Estimating the possible placebo effects (one set for each of the 1 treatment periods)
+|                                    | Total: 38
+.....................................| 17.00s elapsed. 
+
+Conducting inference: 5 steps, and 38 placebo averages
+Step 1... Finished
+Step 2... Finished
+Step 3... Finished
+Step 4... Finished
+Step 5... Finished
+
+Post-treatment results: Effects, p-values, standardized p-values
+
+             │ estimates      pvals  pvals_std 
+─────────────+─────────────────────────────────
+          c1 │ -7.887098   .1315789          0 
+          c2 │ -9.693599   .1842105          0 
+          c3 │  -13.8027   .2105263          0 
+          c4 │   -13.344   .1315789          0 
+          c5 │  -17.0624   .1052632          0 
+          c6 │  -20.8943   .0789474          0 
+          c7 │  -19.8568   .1315789   .0263158 
+          c8 │  -21.0405   .1578947          0 
+          c9 │  -21.4914   .1052632   .0263158 
+         c10 │  -19.1642   .1842105   .0263158 
+         c11 │   -24.554   .1052632          0 
+         c12 │  -24.2687   .1052632   .0263158 
+
+(note: file effect.pdf not found)
+file effect.pdf saved
+(note: file tc.pdf not found)
+file tc.pdf saved
+
+(13 real changes made)
+(3 real changes made)
+</pre>
+<p>#hola mundo <br /><span class="math display"><em>t</em><em>h</em><em>e</em><em>t</em><em>a</em></span><br /></p>
+<p>[Figure 1: efectos de cigarro Note: This is a footnote just below the figure’s caption.][my_img]</p>
+<pre><code>[my_img]: E:\documentos que si importan\Microeconometria\trabajo2\tc.pdf {width=100%}</code></pre>
+</body>
+</html>

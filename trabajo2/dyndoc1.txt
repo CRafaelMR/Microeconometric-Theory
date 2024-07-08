@@ -1,0 +1,85 @@
+#Trabajo 2#
+##Cristobal Meneses##
+Este trabajo ha sido diseñado con el comando dyndoc en mente. Los resultados han sido obtenidos con ello en mente.
+<<dd_do:qui>>
+*comenzamos*
+clear all
+set more off
+global CARP "E:\documentos que si importan\Microeconometria\trabajo2"
+cd "$CARP"
+foreach ado in psmatch2 coefplot scheme-burd estout{
+    cap which `ado'
+    if _rc!=0 ssc install `ado', all
+}
+*ssc install synth, all replace*
+*cap ado uninstall synth_runner //in-case already installed*
+*net install synth_runner, from(https://raw.github.com/bquistorff/synth_runner/master/) replace*
+sysuse synth_smoking, clear
+tsset state year
+<</dd_do>>
+
+*1a*
+<<dd_do:qui>>
+*ocupamos primero el comando Synth promovido por las instrucciones*
+synth cigsale beer(1984(1)1988) lnincome(1972(1)1997) retprice age15to24 cigsale(1988) cigsale(1980) cigsale(1975),trunit(3) trperiod(1989) gen_vars fig
+*luego, ocupamos el equivalente Synth_runner obtenido de github. Sus resultados son equivalentes.*
+synth_runner cigsale beer(1984(1)1988) lnincome retprice age15to24 cigsale(1988) cigsale(1980) cigsale(1975), trunit(3) trperiod(1989) gen_vars
+<</dd_do>>
+Fabricamos una variable llamada California Sintética que es un promedio ponderado de 38 estados de Estados Unidos para minimizar el error antes del tratamiento y, así, medir el error antes y despues de este.
+California Sintético esta generado con la función Synth=0.285*Colorado*+0.101*Connecticut*+0.245*Nevada*+0.369*Utah*.//
+
+<<dd_graph>>
+
+*1b*
+
+<<dd_do:qui>>
+*generamos los graficos usando la extensión de Synth_runner effect_graphs*
+
+effect_graphs , trlinediff(-1) effect_gname(cigsale1_effect) tc_gname(cigsale1_tc) tc_options(saving(tc.pdf , asis replace)) effect_options(saving(effect.pdf , asis replace))
+
+<</dd_do>>
+<<do_graph: graphname("cigsale1_effect")>>//
+<<do_graph: graphname("cigsale1_tc")>>//
+
+*1c*
+Con los graficos en mente, se observa como antes de que se emitiese el impuesto al cigarro en 1989, California Sintético se comportaba como el estado de California.
+
+
+
+*2a*
+<<dd_do:qui>>
+foreach state of num 1 2 4/39{
+synth cigsale beer(1984(1)1988) lnincome(1972(1)1997) retprice age15to24 cigsale(1988) cigsale(1980) cigsale(1975), trunit(`state') trperiod(1989)
+}
+
+<</dd_do>>//
+
+
+*2b*
+
+<<dd_do:qui>>
+synth_runner cigsale beer(1984(1)1988) lnincome retprice age15to24 cigsale(1988) cigsale(1980) cigsale(1975),trunit(3) trperiod(1989)
+single_treatment_graphs, trlinediff(-1) raw_gname(cigsale1_raw) effects_gname(cigsale1_effects) effects_ylabels(-30(10)30) effects_ymax(35) effects_ymin(-35)
+*este estos graficos comparan cada versión sinética de cada estado con la versión sinética de California.*
+
+<</dd_do>>
+
+<<dd_graph>>//
+
+*3a*
+
+<<dd_do:qui>>
+gen tratados=0
+replace tratados=1 if state==3 & year>=1988
+<</dd_do>>
+
+
+<<dd_do:qui>>
+eststo: reg cigsale tratados i.state i.year
+<</dd_do>>
+
+*3b*
+<<dd_do:qui>>
+eststo: reg cigsale tratados i.state i.year, vce(cluster state)
+boottest tratados, cluster(state year) bootcluster(state) gridmin(-2) gridmax(2)
+<</dd_do>>
